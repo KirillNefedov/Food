@@ -1,3 +1,5 @@
+// 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
+
 window.addEventListener('DOMContentLoaded', function() {
 
     // Tabs
@@ -150,11 +152,11 @@ window.addEventListener('DOMContentLoaded', function() {
             this.price = price;
             this.classes = classes;
             this.parent = document.querySelector(parentSelector);
-            this.transfer = 27;
-            this.changeToUAH();
+            this.transfer = 80;
+            this.changeToRub();
         }
 
-        changeToUAH() {
+        changeToRub() {
             this.price = this.price * this.transfer;
         }
 
@@ -175,7 +177,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 <div class="menu__item-divider"></div>
                 <div class="menu__item-price">
                     <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
+                    <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
                 </div>
             `;
             this.parent.append(element);
@@ -285,4 +287,53 @@ window.addEventListener('DOMContentLoaded', function() {
 		fetch('http://localhost:3000/menu')
 				.then(data => data.json())
 				.then(res => console.log(res));
+
+
+		// Slider
+
+		let slideIndex = 1;
+    const slides = document.querySelectorAll('.offer__slide'),
+        prev = document.querySelector('.offer__slider-prev'),
+        next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'),
+        current = document.querySelector('#current');
+
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = slides.length;
+    }
+
+    function showSlides(n) {
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach((item) => item.style.display = 'none');
+
+        slides[slideIndex - 1].style.display = 'block'; // Как ваша самостоятельная работа - переписать на использование классов show/hide
+
+        if (slides.length < 10) {
+            current.textContent =  `0${slideIndex}`;
+        } else {
+            current.textContent =  slideIndex;
+        }
+    }
+
+    function plusSlides (n) {
+        showSlides(slideIndex += n);
+    }
+
+    prev.addEventListener('click', function(){
+        plusSlides(-1);
+    });
+
+    next.addEventListener('click', function(){
+        plusSlides(1);
+    });
 });
